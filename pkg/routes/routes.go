@@ -4,17 +4,23 @@ import (
 	"net/http"
 
 	"github.com/gorilla/mux"
+	"sigs.k8s.io/controller-runtime/pkg/client"
 )
 
 var (
-	baseRoute = "/api/v1/"
+	baseRoute = "/api/v1"
 )
 
-func StartRouter() {
+func StartRouter(client client.Client) *mux.Router {
 	router := mux.NewRouter()
 
 	AddKubernetesRoutes(router)
-	AddCapiRoutes(router)
+
+	capiRouter := NewCapiRouter(client)
+
+	capiRouter.AddCapiRoutes(router)
 
 	http.Handle("/", router)
+
+	return router
 }
