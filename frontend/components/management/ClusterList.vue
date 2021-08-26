@@ -1,0 +1,109 @@
+<template>
+  <div class="wrapper">
+    <p><b>Management clusters</b></p>
+    <div class="cluster-list">
+      <div class="header">
+        <AddButton></AddButton>
+      </div>
+      <table>
+        <tr>
+          <th>Name</th>
+          <th>Available</th>
+          <th>Pending</th>
+          <th>Failed</th>
+          <th>Provider</th>
+          <th>Created</th>
+          <th>Updated</th>
+        </tr>
+        <tr>
+          <td><a href="">capi-mgmt-cluster-01</a></td>
+          <td><b class="available">2</b>/<b class="total">2</b></td>
+          <td><b class="pending">0</b></td>
+          <td><b class="failed">0</b></td>
+          <td><a href="">Cluster API</a></td>
+          <td>26-08-2021:12:00:00</td>
+          <td>26-08-2021:12:00:00</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</template>
+
+<script>
+import AddButton from './AddButton'
+
+export default {
+  name: "ClusterList",
+  components: {
+    AddButton,
+  }
+}
+</script>
+
+<style scoped>
+  p {
+    font-size: 1.5em;
+    text-align: left;
+    color: dimgray;
+  }
+
+  table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  th {
+    color: gray;
+  }
+
+  th, td {
+    padding: 8px;
+  }
+
+  tr:nth-child(even) {
+    background-color: whitesmoke;
+  }
+
+  .available {
+    color: green;
+  }
+
+  .total {
+    color: green;
+  }
+
+  .pending {
+    color: orange;
+  }
+
+  .failed {
+    color: red;
+  }
+
+  .wrapper {
+    float: left;
+    width: 50%;
+  }
+
+  .cluster-list {
+    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12);
+    background: white;
+    border-radius: 5px;
+  }
+
+  .header {
+    display: inline-block;
+    width: 100%;
+  }
+
+  .cluster-cards {
+    padding: 10px;
+  }
+
+  .add-mgmnt-clstr-btn {
+    float: right;
+    padding-right: 10px;
+    padding-top: 10px;
+  }
+</style>
