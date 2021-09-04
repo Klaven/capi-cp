@@ -7,8 +7,8 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 )
 
-var (
-	baseRoute = "/api/v1"
+const (
+	baseRouteV1 = "/api/v1"
 )
 
 func StartRouter(client client.Client) *mux.Router {
@@ -16,9 +16,14 @@ func StartRouter(client client.Client) *mux.Router {
 
 	AddKubernetesRoutes(router)
 
-	capiRouter := NewCapiRouter(client)
+	mgmtRouter := NewMgmtRouter(client)
+	mgmtRouter.AddRoutes(router)
 
-	capiRouter.AddCapiRoutes(router)
+	workloadRouter := NewWorkloadRouter(client)
+	workloadRouter.AddRoutes(router)
+
+	providersRouter := NewProvidersRouter(client)
+	providersRouter.AddRoutes(router)
 
 	http.Handle("/", router)
 

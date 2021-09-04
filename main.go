@@ -4,10 +4,11 @@ import (
 	"flag"
 	"net/http"
 
-	"github.com/klaven/capi-cp/pkg/routes"
 	"github.com/rancher/wrangler/pkg/kubeconfig"
 	"k8s.io/apimachinery/pkg/runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
+
+	"github.com/klaven/capi-cp/pkg/routes"
 )
 
 var (
