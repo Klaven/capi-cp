@@ -12,32 +12,32 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 )
 
-var (
-	capiRoute = "/capi"
+const (
+	mgmtRoute = "/mgmt"
 )
 
-func getCapiBaseRoute() string {
-	return baseRoute + capiRoute
+func getMgmtBaseRoute() string {
+	return baseRouteV1 + mgmtRoute
 }
 
-type CapiRouter struct {
+type MgmtRouter struct {
 	Client client.Client
 }
 
-func NewCapiRouter(client client.Client) *CapiRouter {
-	return &CapiRouter{Client: client}
+func NewMgmtRouter(client client.Client) *MgmtRouter {
+	return &MgmtRouter{Client: client}
 }
 
-func (c *CapiRouter) AddCapiRoutes(router *mux.Router) {
-	router.HandleFunc(getCapiBaseRoute()+"/clusters", c.handleGetClusters).Methods("GET")
+func (c *MgmtRouter) AddRoutes(router *mux.Router) {
+	router.HandleFunc(getMgmtBaseRoute()+"/clusters", c.handleGetClusters).Methods("GET")
 }
 
-func handleCapiRoute(responseWriter http.ResponseWriter, request *http.Request) {
+func handleMgmtRoute(responseWriter http.ResponseWriter, request *http.Request) {
 	responseWriter.WriteHeader(http.StatusOK)
 	fmt.Fprintf(responseWriter, "Something for sure")
 }
 
-func (c *CapiRouter) handleGetClusters(responseWriter http.ResponseWriter, request *http.Request) {
+func (c *MgmtRouter) handleGetClusters(responseWriter http.ResponseWriter, request *http.Request) {
 	responseWriter.Header().Set("Context-Type", "application/x-www-form-urlencoded")
 	responseWriter.Header().Set("Access-Control-Allow-Origin", "*")
 	clusters := &v1alpha4.ClusterList{}
@@ -50,7 +50,7 @@ func (c *CapiRouter) handleGetClusters(responseWriter http.ResponseWriter, reque
 	json.NewEncoder(responseWriter).Encode("No Cluster Created Yet!!!")
 }
 
-func (c *CapiRouter) handleGetCluster(responseWriter http.ResponseWriter, request *http.Request) {
+func (c *MgmtRouter) handleGetCluster(responseWriter http.ResponseWriter, request *http.Request) {
 	responseWriter.Header().Set("Context-Type", "application/x-www-form-urlencoded")
 	responseWriter.Header().Set("Access-Control-Allow-Origin", "*")
 
